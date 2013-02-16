@@ -1,5 +1,5 @@
-#ifndef _FOO_H_
-#define _FOO_H_
+#ifndef _YZX_COOL_H_
+#define _YZX_COOL_H_
 
 extern int yzxSetup(
 	void
@@ -13,8 +13,4 @@ extern int yzxShutdown(
 	void
 );
 
-int yzxFoo(
-	void * p
-);
-
-#endif /* of _FOO_H_ */
+#endif /* of _YZX_COOL_H_ */
