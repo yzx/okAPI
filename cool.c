@@ -1,31 +1,5 @@
 #include "okAPI.h"
 
-typedef int (*COOL_FUN_t) ( void );
-
-typedef struct _cool_s_ {
-	//
-	char       * brief;    //!< brief description
-	COOL_FUN_t      up;    //!< setup function
-	COOL_FUN_t   again;    //!< main loop function
-	COOL_FUN_t    down;    //!< shutdown function
-}
-COOL_s;
-
-#define _COOL(b, u, a, d) \
-int u ( void ); \
-int a ( void ); \
-int d ( void );
-#include "_cool.h"
-_COOL("", yzxNoFun, yzxNoFun, yzxNoFun)
-#undef _COOL
-
-#define _COOL(b, u, a, d) { b, u, a, d },
-static const COOL_s all_cool[  ]= {
-#include "_cool.h"
-	_COOL("", yzxNoFun, yzxNoFun, yzxNoFun)
-};
-#undef _COOL
-
 int yzxNoFun(
 	void
 ) {
@@ -35,21 +9,46 @@ int yzxNoFun(
 int yzxSetup(
 	void
 ) {
+	int i= 0;
 	int r= 0;
+
+	while( all_cool[ i ].brief ) {
+	    if( ( r= all_cool[ i ].up(  ) ) ) {
+	        break;
+	    }
+	    ++i;
+	}
 	return( r );
 }
 
 int yzxLoop(
 	void
 ) {
+	int i= 0;
 	int r= 0;
+
+	while( all_cool[ i ].brief ) {
+	    if( ( r= all_cool[ i ].again(  ) ) ) {
+	        break;
+	    }
+	    ++i;
+	}
 	return( r );
 }
 
 int yzxShutdown(
 	void
 ) {
-	int r= 0;
+	int ret;
+	int   i= 0;
+	int   r= 0;
+
+	while( all_cool[ i ].brief ) {
+	    if( ( ret= all_cool[ i ].down(  ) ) ) {
+	        ++r;
+	    }
+	    ++i;
+	}
 	return( r );
 }
 

@@ -1,36 +1,45 @@
 #include "okAPI.h"
 
-#define CLI_ARGV_MAX    (32)
-
-typedef int (*CLI_FOO_t)( int argc, char *argv[  ] );
-
-typedef struct _cli_t_ {
-	//
-	char      *  name;    //!< name of the command.
-	CLI_FOO_t    clif;    //!< pointer to the command line interface function.
-	char      *  desc;    //!< description of the command.
-	char      * usage;    //!< command usage string.
-}
-CLI_t;
-
-#define _CLI(n, c, d, u) int c ( int argc, char *argv[  ] );
-#include "_cli.h"
-_CLI("", NoClif, "", "")
-#undef _CLI
-
-#define _CLI(n, c, d, u) { n, c, d, u },
-static const CLI_t all_cli[  ]= {
-#include "_cli.h"
-	_CLI(0, 0, 0, 0)
-};
-#undef _CLI
-
-#define CLI_NUM (SIZEOF(all_cli)-1)
-
-int NoClif(
+int yzxNoClif(
 	int    argc,
 	char * argv[  ]
 ) {
 	return( 0 );
+}
+
+int yzxLoopCmnd(
+	void
+) {
+//	static char          buffer[ 256 ];
+//	static unsigned char    idx= 0;
+//	static unsigned char  state= 1;
+//	unsigned char             c;
+	int                       r= 0;
+
+#if 0
+	if( FIFO_Get( &uart_fifo, &c ) ) {
+	    if( state ) {
+	        if( c == 0xA ) {
+	            idx= 0;
+	        }
+	        else if( c == 0xD ) {
+	            buffer[ idx ]= 0;
+	            idx= 0;
+	            state= 0;
+	            Command( );
+	        }
+	        else {
+	            buffer[ idx ]= c;
+	            ++idx;
+	        }
+	    }
+	    else {
+	        if( c == 0xA ) {
+	            state= 1;
+	        }
+	    }
+	}
+#endif
+	return( r );
 }
 
